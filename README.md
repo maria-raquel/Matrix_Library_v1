@@ -1,4 +1,4 @@
-# ProvaII, Programação Estruturada, 2021.2
+# Prova II, Programação Estruturada, 2021.2
 
 Professor:
 
