@@ -12,22 +12,16 @@ Alunos:
 #include "matrix.h"
 #include <stdio.h>
 
-void printar_arrays(int *array, int n){
-    putchar('{');
-
-    for(int i=0; i<n-1; i++)
-        printf("%d, ", array[i]);
-
-    printf("%d}\n", array[n-1]);
-}
-
 int main(){
-    int array[9] = {1, 2, 3, 1, 2, 3, 1, 2, 3};
-    Matrix m;
+    int array[9] = {1, 2, 3, 4, 5, 6};
+    Matrix m1, mz;
 
-    m = create_matrix(array, 3, 3);
+    m1 = create_matrix(array, 2, 3);
+    mz = zeros_matrix(3, 2);
     
-    print_matrix(m);
+    print_matrix(m1);
+    putchar('\n');
+    print_matrix(mz);
 
     return 0;
 }
