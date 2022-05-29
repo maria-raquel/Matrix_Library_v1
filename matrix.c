@@ -44,10 +44,11 @@ Matrix zeros_matrix(int n_rows, int n_cols){
 
 void print_matrix(Matrix matrix){
     int i=0;
-    for (int row = 0; i < matrix.n_rows; row++){
-        for (int col = 0; i < matrix.n_cols; col++)
+    for (int row = 0; row < matrix.n_rows; row++){
+        printf("( ");
+        for (int col = 0; col < matrix.n_cols; col++)
             printf("%d ", matrix.data[i++]);
-        putchar('\n');
+        printf(")\n");
     }
 }
 
