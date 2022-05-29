@@ -37,6 +37,19 @@ Matrix full_matrix(int n_rows, int n_cols, int value){
     return m;
 }
 
+Matrix i_matrix(int n){
+    int *data;
+    data = malloc(n*n*sizeof(int));
+
+    for (int i=0; i<n*n; i++)
+        *(data+i) = 0;
+    
+    for (int j=0; j<n*n; j+=n+1)
+        *(data+j) = 1;
+
+    return create_matrix(data, n, n);
+}
+
 //>==================== acessar elementos: =====================
 
 void print_matrix(Matrix matrix){
