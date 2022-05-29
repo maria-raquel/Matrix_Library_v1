@@ -23,24 +23,21 @@ Matrix create_matrix(int *data, int n_rows, int n_cols){
 }
 
 Matrix zeros_matrix(int n_rows, int n_cols){
+    return full_matrix(n_rows, n_cols, 0);
+}
+
+Matrix full_matrix(int n_rows, int n_cols, int value){
     int *data;
-    data = malloc(n_rows*n_cols*sizeof(0));
+    data = malloc(n_rows*n_cols*sizeof(int));
 
     for (int i=0; i < n_rows*n_cols; i++)
-        *(data+i) = 0;
+        *(data+i) = value;
 
-    Matrix z = create_matrix(data, n_rows, n_cols);
-    return z;
+    Matrix m = create_matrix(data, n_rows, n_cols);
+    return m;
 }
 
 //>==================== acessar elementos: =====================
-
-/*
-    a b c
-    d e f
-    g h i
-
-*/
 
 void print_matrix(Matrix matrix){
     int i=0;
