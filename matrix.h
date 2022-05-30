@@ -41,8 +41,8 @@ void print_matrix(Matrix matrix);                                 //ok
 
 //>================= manipulacao de dimensoes: =================
 
-Matrix transpose(Matrix matrix);
-Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols);
+Matrix transpose(Matrix matrix);                                  //ok
+Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols);    //ok
 Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce);
 
 //>======================== agregacao: =========================

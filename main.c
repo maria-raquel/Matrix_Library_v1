@@ -35,13 +35,18 @@ int main(){
     printf("\nValor minimo = %d\nIndice = %d\n", min(m1), argmin(m1));
     printf("Valor maximo = %d\nIndice = %d\n\n", max(m1), argmax(m1));
 
+    printf("Soma: \n");
     print_matrix(add(m1, m1));
-    printf("\n");
+    printf("\nSubtracao: \n");
     print_matrix(sub(m1, m1));
-    printf("\n");
+    printf("\nDivisao: \n");
     print_matrix(division(m1, m1));
-    printf("\n");
+    printf("\nMultiplicacao: \n");
     print_matrix(mul(m1, m1));
+    printf("\nTransposta: \n");
+    print_matrix(transpose(m1));
+    printf("\nCom dimensoes alteradas: \n");
+    print_matrix(reshape(m1, 1, 6));
 
     return 0;
 }
