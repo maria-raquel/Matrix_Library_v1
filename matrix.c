@@ -52,6 +52,24 @@ Matrix i_matrix(int n){
 
 //>==================== acessar elementos: =====================
 
+int get_element(Matrix matrix, int ri, int ci){
+    int i=matrix.offset;
+
+    for (int row=0; row<ri; i += matrix.stride_rows, row++){}
+    for (int col=0; col<ci; i += matrix.stride_cols, col++){}
+
+    return matrix.data[i];
+}
+
+void put_element(Matrix matrix, int ri, int ci, int elem){
+    int i=matrix.offset;
+
+    for (int row=0; row<ri; i += matrix.stride_rows, row++){}
+    for (int col=0; col<ci; i += matrix.stride_cols, col++){}
+
+    matrix.data[i] = elem;
+}
+
 void print_matrix(Matrix matrix){
     int i=0;
     for (int row = 0; row < matrix.n_rows; row++){

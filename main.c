@@ -22,12 +22,15 @@ int main(){
     mi = i_matrix(4);
     
     print_matrix(m1);
-    putchar('\n');
+    for (int i=0; i<2; i++){
+        for(int j=0; j<3; j++){
+            printf("i=%d, j=%d, ", i, j);
+            printf("elemento=%d\n", get_element(m1, i, j));
+        }
+    }
+
+    put_element(mz, 2, 2, 3);
     print_matrix(mz);
-    putchar('\n');
-    print_matrix(mf);
-    putchar('\n');
-    print_matrix(mi);
 
     return 0;
 }
