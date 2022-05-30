@@ -87,7 +87,7 @@ void print_matrix(Matrix matrix){
 int min(Matrix matrix){
     int min = matrix.data[matrix.offset];
 
-    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] < min){
             min = matrix.data[i];
         }
@@ -96,11 +96,10 @@ int min(Matrix matrix){
     return min;
 }
 
-
 int max(Matrix matrix){
     int max = matrix.data[matrix.offset];
 
-    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] > max){
             max = matrix.data[i];
         }
@@ -109,14 +108,13 @@ int max(Matrix matrix){
     return max;
 }
 
-
 int argmin(Matrix matrix){
 
     int index_min = matrix.offset;
     int min = matrix.data[index_min];
 
 
-    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] < min){
             min = matrix.data[i];
             index_min = i;
@@ -126,14 +124,13 @@ int argmin(Matrix matrix){
     return index_min;
 }
 
-
 int argmax(Matrix matrix){
 
     int index_max = matrix.offset;
     int max = matrix.data[index_max];
 
 
-    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] > max){
             max = matrix.data[i];
             index_max = i;
@@ -144,8 +141,48 @@ int argmax(Matrix matrix){
 }
 
 
-
-
-
-
 //>================== operacoes aritmeticas: ===================
+
+Matrix add(Matrix matrix_1, Matrix matrix_2){
+    int *data;
+    data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
+
+    for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
+        *(data+i) = matrix_1.data[i] + matrix_2.data[i];
+
+    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
+    return m3;
+}
+
+Matrix sub(Matrix matrix_1, Matrix matrix_2){
+    int *data;
+    data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
+
+    for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
+        *(data+i) = matrix_1.data[i] - matrix_2.data[i];
+
+    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
+    return m3;
+}
+
+Matrix division(Matrix matrix_1, Matrix matrix_2){
+    int *data;
+    data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
+
+    for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
+        *(data+i) = matrix_1.data[i] / matrix_2.data[i];
+
+    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
+    return m3;
+}
+
+Matrix mul(Matrix matrix_1, Matrix matrix_2){
+    int *data;
+    data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
+
+    for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
+        *(data+i) = matrix_1.data[i] * matrix_2.data[i];
+
+    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
+    return m3;
+}
