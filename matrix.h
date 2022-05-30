@@ -12,7 +12,7 @@ Alunos:
 #ifndef MATRIX_H
 #define MATRIX_H
 
-//>==================== Definicao da Struck: ===================
+//>==================== Definicao da Struct: ===================
 
 typedef struct {
     int *data;
@@ -47,16 +47,16 @@ Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce);
 
 //>======================== agregacao: =========================
 
-int min(Matrix matrix);                                           //ok 
-int max(Matrix matrix);                                           //ok 
-int argmin(Matrix matrix);                                        //ok 
-int argmax(Matrix matrix);                                        //ok 
+int min(Matrix matrix);                                           //ok
+int max(Matrix matrix);                                           //ok
+int argmin(Matrix matrix);                                        //ok
+int argmax(Matrix matrix);                                        //ok
 
 //>================== operacoes aritmeticas: ===================
 
-Matrix add(Matrix matrix_1, Matrix matrix_2);
-Matrix sub(Matrix matrix_1, Matrix matrix_2);
-Matrix division(Matrix matrix_1, Matrix matrix_2);
-Matrix mul(Matrix matrix_1, Matrix matrix_2);
+Matrix add(Matrix matrix_1, Matrix matrix_2);                     //ok
+Matrix sub(Matrix matrix_1, Matrix matrix_2);                     //ok
+Matrix division(Matrix matrix_1, Matrix matrix_2);                //ok
+Matrix mul(Matrix matrix_1, Matrix matrix_2);                     //ok
 
 #endif
