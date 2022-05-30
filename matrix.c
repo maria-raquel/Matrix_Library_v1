@@ -84,4 +84,68 @@ void print_matrix(Matrix matrix){
 
 //>======================== agregacao: =========================
 
+int min(Matrix matrix){
+    int min = matrix.data[matrix.offset];
+
+    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+        if (matrix.data[i] < min){
+            min = matrix.data[i];
+        }
+    }
+
+    return min;
+}
+
+
+int max(Matrix matrix){
+    int max = matrix.data[matrix.offset];
+
+    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+        if (matrix.data[i] > max){
+            max = matrix.data[i];
+        }
+    }
+    
+    return max;
+}
+
+
+int argmin(Matrix matrix){
+
+    int index_min = matrix.offset;
+    int min = matrix.data[index_min];
+
+
+    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+        if (matrix.data[i] < min){
+            min = matrix.data[i];
+            index_min = i;
+        }
+    }
+
+    return index_min;
+}
+
+
+int argmax(Matrix matrix){
+
+    int index_max = matrix.offset;
+    int max = matrix.data[index_max];
+
+
+    for (int i=1; i < matrix.n_cols*matrix.n_rows; i++){
+        if (matrix.data[i] > max){
+            max = matrix.data[i];
+            index_max = i;
+        }
+    }
+
+    return index_max;
+}
+
+
+
+
+
+
 //>================== operacoes aritmeticas: ===================

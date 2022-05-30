@@ -32,5 +32,9 @@ int main(){
     put_element(mz, 2, 2, 3);
     print_matrix(mz);
 
+    printf("Valor minimo = %d\nIndice = %d\n", min(m1), argmin(m1));
+    printf("Valor maximo = %d\nIndice = %d\n", max(m1), argmax(m1));
+
+
     return 0;
 }
