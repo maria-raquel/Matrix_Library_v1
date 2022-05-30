@@ -54,9 +54,9 @@ int argmax(Matrix matrix);                                        //ok
 
 //>================== operacoes aritmeticas: ===================
 
-Matrix add(Matrix matrix_1, Matrix matrix_2);
-Matrix sub(Matrix matrix_1, Matrix matrix_2);
-Matrix division(Matrix matrix_1, Matrix matrix_2);
-Matrix mul(Matrix matrix_1, Matrix matrix_2);
+Matrix add(Matrix matrix_1, Matrix matrix_2);                     //ok
+Matrix sub(Matrix matrix_1, Matrix matrix_2);                     //ok
+Matrix division(Matrix matrix_1, Matrix matrix_2);                //ok
+Matrix mul(Matrix matrix_1, Matrix matrix_2);                     //ok
 
 #endif
