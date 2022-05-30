@@ -27,17 +27,17 @@ typedef struct {
 
 //>==================== criacao de matrizes: ===================
 
-Matrix create_matrix(int *data, int n_rows, int n_cols);
-Matrix zeros_matrix(int n_rows, int n_cols);
-Matrix full_matrix(int n_rows, int n_cols, int value);
-Matrix i_matrix(int n);
+Matrix create_matrix(int *data, int n_rows, int n_cols);          //ok
+Matrix zeros_matrix(int n_rows, int n_cols);                      //ok
+Matrix full_matrix(int n_rows, int n_cols, int value);            //ok
+Matrix i_matrix(int n);                                           //ok 
 Matrix tile_matrix(Matrix matrix, int reps);
 
 //>==================== acessar elementos: =====================
 
-int get_element(Matrix matrix, int ri, int ci);
-void put_element(Matrix matrix, int ri, int ci, int elem);
-void print_matrix(Matrix matrix);
+int get_element(Matrix matrix, int ri, int ci);                   //ok
+void put_element(Matrix matrix, int ri, int ci, int elem);        //ok
+void print_matrix(Matrix matrix);                                 //ok 
 
 //>================= manipulacao de dimensoes: =================
 
@@ -60,4 +60,3 @@ Matrix division(Matrix matrix_1, Matrix matrix_2);
 Matrix mul(Matrix matrix_1, Matrix matrix_2);
 
 #endif
-
