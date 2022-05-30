@@ -50,7 +50,26 @@ Matrix i_matrix(int n){
     return create_matrix(data, n, n);
 }
 
+// Matrix tile_matrix(Matrix matrix, int reps){
+//     int *data, i=0, j;
+//     data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int));
+
+//     while (i < matrix.n_cols*reps){
+//         for (j=0; j < matrix.n_cols; i++, j++)
+//             *(data+i) = matrix.data[j];
+//     }
+// }
+
 //>==================== acessar elementos: =====================
+
+int get_element(Matrix matrix, int ri, int ci){
+    int i=matrix.offset;
+
+    for (int row=0; row<ri; i += matrix.stride_rows, row++){}
+    for (int col=0; col<ci; i += matrix.stride_cols, col++){}
+
+    return matrix.data[i];
+}
 
 void print_matrix(Matrix matrix){
     int i=0;
