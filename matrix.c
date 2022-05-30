@@ -82,6 +82,31 @@ void print_matrix(Matrix matrix){
 
 //>================= manipulacao de dimensoes: =================
 
+Matrix transpose(Matrix matrix){
+    int k = 0;
+    int *data;
+    data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int));
+    
+    for (int i = matrix.offset; i < matrix.n_cols-1; i += matrix.stride_rows){
+        for (int j = matrix.offset; j < matrix.n_rows*matrix.n_cols; j += matrix.stride_cols){
+            data[j] = matrix.data[k];
+            k++;
+        }
+    }
+
+    Matrix mt = create_matrix(data, matrix.n_cols, matrix.n_rows);
+    return mt;
+}
+
+Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
+    Matrix mreshaped = matrix;
+    
+    mreshaped.n_cols = new_n_cols;
+    mreshaped.n_rows = new_n_rows;
+
+    return mreshaped;
+}
+
 //>======================== agregacao: =========================
 
 int min(Matrix matrix){
@@ -104,7 +129,7 @@ int max(Matrix matrix){
             max = matrix.data[i];
         }
     }
-    
+
     return max;
 }
 
@@ -112,7 +137,6 @@ int argmin(Matrix matrix){
 
     int index_min = matrix.offset;
     int min = matrix.data[index_min];
-
 
     for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] < min){
@@ -128,7 +152,6 @@ int argmax(Matrix matrix){
 
     int index_max = matrix.offset;
     int max = matrix.data[index_max];
-
 
     for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] > max){
