@@ -29,5 +29,8 @@ int main(){
         }
     }
 
+    put_element(mz, 2, 2, 3);
+    print_matrix(mz);
+
     return 0;
 }
