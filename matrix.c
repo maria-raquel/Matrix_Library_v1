@@ -88,10 +88,8 @@ Matrix transpose(Matrix matrix){
     data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int));
     
     for (int i = matrix.offset; i < matrix.n_cols-1; i += matrix.stride_rows){
-        for (int j = matrix.offset; j < matrix.n_rows*matrix.n_cols; j += matrix.stride_cols){
-            data[j] = matrix.data[k];
-            k++;
-        }
+        for (int j = matrix.offset; j < matrix.n_rows*matrix.n_cols; j += matrix.stride_cols)
+            data[j] = matrix.data[k++];
     }
 
     Matrix mt = create_matrix(data, matrix.n_cols, matrix.n_rows);
@@ -100,6 +98,11 @@ Matrix transpose(Matrix matrix){
 
 Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
     Matrix mreshaped = matrix;
+
+    if (matrix.n_cols*matrix.n_rows != new_n_rows*new_n_cols){
+        puts("reshape invalido");
+        return matrix;    
+    }
     
     mreshaped.n_cols = new_n_cols;
     mreshaped.n_rows = new_n_rows;

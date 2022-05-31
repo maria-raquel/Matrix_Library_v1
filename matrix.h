@@ -41,8 +41,8 @@ void print_matrix(Matrix matrix);                                 //ok
 
 //>================= manipulacao de dimensoes: =================
 
-Matrix transpose(Matrix matrix);                                  //ok
-Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols);    //ok
+Matrix transpose(Matrix matrix);                                  //ok - rever
+Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols);    //ok - refazer
 Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce);
 
 //>======================== agregacao: =========================
@@ -55,8 +55,8 @@ int argmax(Matrix matrix);                                        //ok
 //>================== operacoes aritmeticas: ===================
 
 Matrix add(Matrix matrix_1, Matrix matrix_2);                     //ok
-Matrix sub(Matrix matrix_1, Matrix matrix_2);                     //ok
-Matrix division(Matrix matrix_1, Matrix matrix_2);                //ok
+Matrix sub(Matrix matrix_1, Matrix matrix_2);                     //ok      revisar
+Matrix division(Matrix matrix_1, Matrix matrix_2);                //ok       todas
 Matrix mul(Matrix matrix_1, Matrix matrix_2);                     //ok
 
 #endif
