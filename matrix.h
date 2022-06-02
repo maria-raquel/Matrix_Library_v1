@@ -31,18 +31,18 @@ Matrix create_matrix(int *data, int n_rows, int n_cols);          //ok
 Matrix zeros_matrix(int n_rows, int n_cols);                      //ok
 Matrix full_matrix(int n_rows, int n_cols, int value);            //ok
 Matrix i_matrix(int n);                                           //ok 
-Matrix tile_matrix(Matrix matrix, int reps);
+Matrix tile_matrix(Matrix matrix, int reps);                      // QUASE
 
 //>==================== acessar elementos: =====================
 
 int get_element(Matrix matrix, int ri, int ci);                   //ok
 void put_element(Matrix matrix, int ri, int ci, int elem);        //ok
-void print_matrix(Matrix matrix);                                 //ok 
+void print_matrix(Matrix matrix);                                 //ok - pensar
 
 //>================= manipulacao de dimensoes: =================
 
-Matrix transpose(Matrix matrix);                                  //ok - rever
-Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols);    //ok - refazer
+Matrix transpose(Matrix matrix);                                  //ok
+Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols);    //ok
 Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce);
 
 //>======================== agregacao: =========================
@@ -55,8 +55,8 @@ int argmax(Matrix matrix);                                        //ok
 //>================== operacoes aritmeticas: ===================
 
 Matrix add(Matrix matrix_1, Matrix matrix_2);                     //ok
-Matrix sub(Matrix matrix_1, Matrix matrix_2);                     //ok      revisar
-Matrix division(Matrix matrix_1, Matrix matrix_2);                //ok       todas
+Matrix sub(Matrix matrix_1, Matrix matrix_2);                     //ok
+Matrix division(Matrix matrix_1, Matrix matrix_2);                //ok
 Matrix mul(Matrix matrix_1, Matrix matrix_2);                     //ok
 
 #endif
