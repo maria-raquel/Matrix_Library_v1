@@ -51,19 +51,18 @@ Matrix i_matrix(int n){
 }
 
 Matrix tile_matrix(Matrix matrix, int reps){
-    int *data, new_stride_row;
+    int *data;
     data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int)*reps);
+    int k = 0;
 
-    new_stride_row = matrix.n_cols*reps;
-    int strides = 0;
-
-    for (int i = matrix.offset; i < matrix.n_cols*matrix.n_rows; i++)
+    for (int l = 1; l < matrix.n_rows+1; l++){
         for (int j = 0; j < reps; j++){
-            *(data+i+j*matrix.stride_rows) = matrix.data[i];
-            printf("elo: %d\n", matrix.data[i]);
-            printf("pos: %d\n", i+j*matrix.stride_rows);
+            for (int i = 0 + (l-1)*matrix.stride_rows; i < matrix.stride_rows + (l-1)*matrix.stride_rows; i++){
+                *(data + k) = matrix.data[i];
+                k++;
+            }
         }
-
+    }
     return create_matrix(data, matrix.n_rows, matrix.n_cols*reps);
 }
 
