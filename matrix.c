@@ -99,7 +99,7 @@ void print_matrix(Matrix matrix){
     for (int row = 0; row < matrix.n_rows; row++){
         printf("( ");
         for (int col = 0; col < matrix.n_cols; col++)
-            printf("%d ", matrix.data[i++]);
+            printf("%2d ", matrix.data[i++]);
         printf(")\n");
     }
 }
