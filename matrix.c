@@ -50,6 +50,38 @@ Matrix i_matrix(int n){
     return create_matrix(data, n, n);
 }
 
+Matrix tile_matrix(Matrix matrix, int reps){
+    int *data;
+    data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int)*reps);
+
+    // i percorre linhas
+    // j sao repetições
+    // k é o indice do novo data
+
+    int i_new_matrix = 0;
+    int i_matrix = matrix.offset;
+
+    for (int i_rows = 0; i_rows < matrix.n_rows; i_rows++){
+        for (int i_reps = 0; i_reps < reps; i_reps++){
+            for(; i_new_matrix < matrix.n_cols*reps; i_new_matrix++){
+                *(data+i_new_matrix) = matrix.data[i_matrix++];
+            }
+        }
+    }
+
+
+    return create_matrix(data, matrix.n_rows, matrix.n_cols*reps);
+}
+
+/*   a b a b a b
+     c d c d c d
+
+    for(iterando com reps, j+stride_rows)
+        for()
+
+
+*/
+
 //>==================== acessar elementos: =====================
 
 int get_element(Matrix matrix, int ri, int ci){
@@ -82,18 +114,13 @@ void print_matrix(Matrix matrix){
 
 //>================= manipulacao de dimensoes: =================
 
-Matrix transpose(Matrix matrix){
-    int k = 0;
-    int *data;
-    data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int));
-    
-    for (int i = matrix.offset; i < matrix.n_cols-1; i += matrix.stride_rows){
-        for (int j = matrix.offset; j < matrix.n_rows*matrix.n_cols; j += matrix.stride_cols)
-            data[j] = matrix.data[k++];
-    }
 
-    Matrix mt = create_matrix(data, matrix.n_cols, matrix.n_rows);
-    return mt;
+Matrix transpose(Matrix matrix){
+    Matrix m;
+    m = create_matrix(matrix.data, matrix.n_cols, matrix.n_rows);
+    m.stride_cols = m.n_cols;
+    m.stride_rows = 1;
+    return m;
 }
 
 Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
@@ -101,7 +128,7 @@ Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
 
     if (matrix.n_cols*matrix.n_rows != new_n_rows*new_n_cols){
         puts("reshape invalido");
-        return matrix;    
+        return zeros_matrix(1, 1);    
     }
     
     mreshaped.n_cols = new_n_cols;
@@ -115,11 +142,9 @@ Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
 int min(Matrix matrix){
     int min = matrix.data[matrix.offset];
 
-    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
-        if (matrix.data[i] < min){
+    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++)
+        if (matrix.data[i] < min)
             min = matrix.data[i];
-        }
-    }
 
     return min;
 }
@@ -127,11 +152,9 @@ int min(Matrix matrix){
 int max(Matrix matrix){
     int max = matrix.data[matrix.offset];
 
-    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
-        if (matrix.data[i] > max){
+    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++)
+        if (matrix.data[i] > max)
             max = matrix.data[i];
-        }
-    }
 
     return max;
 }
@@ -170,6 +193,12 @@ int argmax(Matrix matrix){
 //>================== operacoes aritmeticas: ===================
 
 Matrix add(Matrix matrix_1, Matrix matrix_2){
+
+    if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
+        puts("soma invalida");
+        return zeros_matrix(1, 1);
+    }
+
     int *data;
     data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
 
@@ -181,6 +210,12 @@ Matrix add(Matrix matrix_1, Matrix matrix_2){
 }
 
 Matrix sub(Matrix matrix_1, Matrix matrix_2){
+
+    if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
+        puts("subtracao invalida");
+        return zeros_matrix(1, 1);
+    }
+
     int *data;
     data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
 
@@ -192,10 +227,26 @@ Matrix sub(Matrix matrix_1, Matrix matrix_2){
 }
 
 Matrix division(Matrix matrix_1, Matrix matrix_2){
-    int *data;
-    data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
+    int size;
 
-    for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
+    if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
+        puts("divisao invalida: tamanhos incompativeis");
+        return zeros_matrix(1, 1);
+    }
+
+    size = matrix_1.n_cols*matrix_1.n_rows;
+
+    for (int i = 0; i<size; i++){
+        if (matrix_2.data[i] == 0){
+            puts("divisao invalida: denominador nulo");
+            return zeros_matrix(1, 1);
+        }
+    }
+
+    int *data;
+    data = malloc(size*sizeof(int));
+
+    for (int i = matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
         *(data+i) = matrix_1.data[i] / matrix_2.data[i];
 
     Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
@@ -203,6 +254,11 @@ Matrix division(Matrix matrix_1, Matrix matrix_2){
 }
 
 Matrix mul(Matrix matrix_1, Matrix matrix_2){
+    if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
+        puts("multiplicacao invalida");
+        return zeros_matrix(1, 1);
+    }
+
     int *data;
     data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
 
