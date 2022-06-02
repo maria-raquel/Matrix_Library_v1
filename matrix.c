@@ -51,35 +51,28 @@ Matrix i_matrix(int n){
 }
 
 Matrix tile_matrix(Matrix matrix, int reps){
-    int *data;
+    int *data, new_stride_row;
     data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int)*reps);
 
-    // i percorre linhas
-    // j sao repetições
-    // k é o indice do novo data
+    new_stride_row = matrix.n_cols*reps;
+    int strides = 0;
 
-    int i_new_matrix = 0;
-    int i_matrix = matrix.offset;
-
-    for (int i_rows = 0; i_rows < matrix.n_rows; i_rows++){
-        for (int i_reps = 0; i_reps < reps; i_reps++){
-            for(; i_new_matrix < matrix.n_cols*reps; i_new_matrix++){
-                *(data+i_new_matrix) = matrix.data[i_matrix++];
-            }
+    for (int i = matrix.offset; i < matrix.n_cols*matrix.n_rows; i++)
+        for (int j = 0; j < reps; j++){
+            *(data+i+j*matrix.stride_rows) = matrix.data[i];
+            printf("elo: %d\n", matrix.data[i]);
+            printf("pos: %d\n", i+j*matrix.stride_rows);
         }
-    }
-
 
     return create_matrix(data, matrix.n_rows, matrix.n_cols*reps);
 }
 
-/*   a b a b a b
-     c d c d c d
+/*     
+       a b c 
+       c d e 
+       f g h
 
-    for(iterando com reps, j+stride_rows)
-        for()
-
-
+       a b c  a b c  a b c
 */
 
 //>==================== acessar elementos: =====================
@@ -136,6 +129,33 @@ Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
 
     return mreshaped;
 }
+
+// rs é o índice da linha inicial do recorte
+// re é o índice da linha final do recorte
+// cs é o índice da coluna inicial do recorte
+// ce é o índice da coluna final do recorte
+
+Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce){
+    Matrix m;
+    m = create_matrix(a_matrix.data, (re-rs), (ce-cs));
+
+    int new_offset = a_matrix.offset;
+    for (int row=0; row<rs; new_offset += a_matrix.stride_rows, row++){}
+    for (int col=0; col<cs; new_offset += a_matrix.stride_cols, col++){}
+
+    m.offset = new_offset;
+
+    return m;
+}
+
+/*     
+       a b c 
+       c d e 
+       f g h
+
+       a b c  a b c  a b c
+*/
+
 
 //>======================== agregacao: =========================
 

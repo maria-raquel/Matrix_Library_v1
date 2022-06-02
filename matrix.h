@@ -31,7 +31,7 @@ Matrix create_matrix(int *data, int n_rows, int n_cols);          //ok
 Matrix zeros_matrix(int n_rows, int n_cols);                      //ok
 Matrix full_matrix(int n_rows, int n_cols, int value);            //ok
 Matrix i_matrix(int n);                                           //ok 
-Matrix tile_matrix(Matrix matrix, int reps);                      // QUASE
+Matrix tile_matrix(Matrix matrix, int reps);                      //buggada
 
 //>==================== acessar elementos: =====================
 
@@ -43,7 +43,7 @@ void print_matrix(Matrix matrix);                                 //ok - pensar
 
 Matrix transpose(Matrix matrix);                                  //ok
 Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols);    //ok
-Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce);
+Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce);    //buggada
 
 //>======================== agregacao: =========================
 
