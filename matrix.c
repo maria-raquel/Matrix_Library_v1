@@ -66,14 +66,6 @@ Matrix tile_matrix(Matrix matrix, int reps){
     return create_matrix(data, matrix.n_rows, matrix.n_cols*reps);
 }
 
-/*     
-       a b c 
-       c d e 
-       f g h
-
-       a b c  a b c  a b c
-*/
-
 //>==================== acessar elementos: =====================
 
 int get_element(Matrix matrix, int ri, int ci){
@@ -95,7 +87,7 @@ void put_element(Matrix matrix, int ri, int ci, int elem){
 }
 
 void print_matrix(Matrix matrix){
-    int i=0;
+    int i=matrix.offset;
     for (int row = 0; row < matrix.n_rows; row++){
         printf("( ");
         for (int col = 0; col < matrix.n_cols; col++)
@@ -136,13 +128,31 @@ Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
 
 Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce){
     Matrix m;
-    m = create_matrix(a_matrix.data, (re-rs), (ce-cs));
+    int *data;
+    data = malloc((re-rs)*(ce-cs)*sizeof(int)); 
+    
+    int row=0;
+    int col=0;
 
     int new_offset = a_matrix.offset;
-    for (int row=0; row<rs; new_offset += a_matrix.stride_rows, row++){}
-    for (int col=0; col<cs; new_offset += a_matrix.stride_cols, col++){}
+    for (; row<rs; new_offset += a_matrix.stride_rows, row++){}
+    for (; col<cs; new_offset += a_matrix.stride_cols, col++){}
 
     m.offset = new_offset;
+
+    for (int i=new_offset, j = 0; j < (re-rs)*(ce-cs); j++){
+        *(data + j) = a_matrix.data[i++];
+        if (j == (ce-cs)){
+            i += a_matrix.stride_cols - 1;
+        }
+    }
+
+    m = create_matrix(data, (re-rs), (ce-cs));
+
+    printf("offs=%d r=%d c=%d\n", new_offset, row, col);
+
+    m.stride_rows = a_matrix.stride_rows;
+    m.stride_cols = a_matrix.stride_cols;
 
     return m;
 }

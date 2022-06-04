@@ -23,9 +23,10 @@ int main(){
     m1 = create_matrix(array, 5, 3);
     // print_matrix(a_matrix);
     // putchar('\n');
-    print_matrix(tile_matrix(m1, 5));
+    // print_matrix(tile_matrix(m1, 5));
 
-    // print_matrix(slice(a_matrix, 1, 3, 1, 3));
+    print_matrix(m1);
+    print_matrix(slice(m1, 2, 5, 0, 2));
 
     return 0;
 }
