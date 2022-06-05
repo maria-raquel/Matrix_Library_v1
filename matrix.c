@@ -1,12 +1,13 @@
 /*
->>>>>>>>>>> PROVA_2_PROGRAMACAO_ESTRUTURADA <<<<<<<<<<<<<
+>>>>>>>>>>> PROJETO FINAL DE PROGRAMACAO ESTRUTURADA <<<<<<<<<<<<<
 
-* Professor: Igor Malheiros
+Professor: 
+Igor Malheiros
 
->>>>>>>>>>>>>>>>>>>>>>>>>>|<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Alunos:
-- Joao Antonio Honorato | 20210026680
-- Maria Raquel Martinez | 20200025900
+Joao Antonio Honorato | 20210026680
+Maria Raquel Martinez | 20200025900
+
 */
 
 #include "matrix.h"
@@ -30,8 +31,8 @@ Matrix full_matrix(int n_rows, int n_cols, int value){
     int *data;
     data = malloc(n_rows*n_cols*sizeof(int));
 
-    for (int i=0; i < n_rows*n_cols; i++)
-        *(data+i) = value;
+    for (int i=0; i < n_rows*n_cols;)
+        *(data+i++) = value;
 
     Matrix m = create_matrix(data, n_rows, n_cols);
     return m;
@@ -41,19 +42,18 @@ Matrix i_matrix(int n){
     int *data;
     data = malloc(n*n*sizeof(int));
 
-    for (int i=0; i<n*n; i++)
-        *(data+i) = 0;
+    for (int i=0; i < n*n;)
+        *(data+i++) = 0;
     
-    for (int j=0; j<n*n; j+=n+1)
+    for (int j=0; j < n*n; j += n+1)
         *(data+j) = 1;
 
     return create_matrix(data, n, n);
 }
 
 Matrix tile_matrix(Matrix matrix, int reps){
-    int *data;
+    int *data, k = 0;
     data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int)*reps);
-    int k = 0;
 
     for (int l = 1; l < matrix.n_rows+1; l++){
         for (int j = 0; j < reps; j++){
@@ -66,16 +66,17 @@ Matrix tile_matrix(Matrix matrix, int reps){
     return create_matrix(data, matrix.n_rows, matrix.n_cols*reps);
 }
 
-//>==================== acessar elementos: =====================
+//>==================== acesso a elementos: ====================
 
 int get_element(Matrix matrix, int ri, int ci){
 
     if (ri >= matrix.n_rows || ci >= matrix.n_cols){
-        puts("ERROR: index out of range");
+        puts("in get_element: ");
+        printf("Error: index [%d][%d] is out of bounds\n", ri, ci);
         exit(1);
     }
 
-    int i=matrix.offset;
+    int i = matrix.offset;
 
     for (int row=0; row<ri; i += matrix.stride_rows, row++){}
     for (int col=0; col<ci; i += matrix.stride_cols, col++){}
@@ -86,11 +87,12 @@ int get_element(Matrix matrix, int ri, int ci){
 void put_element(Matrix matrix, int ri, int ci, int elem){
 
     if (ri >= matrix.n_rows || ci >= matrix.n_cols){
-        puts("ERROR: index out of range");
+        puts("in put_element: ");
+        printf("Error: index [%d][%d] is out of bounds\n", ri, ci);
         exit(1);
     }
 
-    int i=matrix.offset;
+    int i = matrix.offset;
 
     for (int row=0; row<ri; i += matrix.stride_rows, row++){}
     for (int col=0; col<ci; i += matrix.stride_cols, col++){}
@@ -99,7 +101,7 @@ void put_element(Matrix matrix, int ri, int ci, int elem){
 }
 
 void print_matrix(Matrix matrix){
-    int i=matrix.offset;
+    int i = matrix.offset;
     for (int row = 0; row < matrix.n_rows; row++){
         printf("( ");
         for (int col = 0; col < matrix.n_cols; col++)
@@ -113,8 +115,7 @@ void print_matrix(Matrix matrix){
 Matrix transpose(Matrix matrix){
     int *data = malloc((matrix.n_cols)*(matrix.n_rows)*sizeof(int)); 
 
-    int cols_counter = 1;
-    int cols_resetter = 0;
+    int cols_counter = 1, cols_resetter = 0;
 
     for (int i = 0, j = 0; i < matrix.n_cols*matrix.n_rows; i++){
         data[i] = matrix.data[j];
@@ -132,24 +133,18 @@ Matrix transpose(Matrix matrix){
 }
 
 Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
-    Matrix mreshaped = matrix;
-
-    if (matrix.n_cols*matrix.n_rows != new_n_rows*new_n_cols){
-        puts("reshape invalido");
-        return zeros_matrix(1, 1);    
+   if (matrix.n_cols*matrix.n_rows != new_n_rows*new_n_cols){
+        puts("in reshape: ");
+        printf("Error: cannot reshape matrix of %d elements into shape (%d, %d)\n", matrix.n_cols*matrix.n_rows, new_n_rows, new_n_cols);
+        exit(1);
     }
-    
-    mreshaped.n_cols = new_n_cols;
-    mreshaped.n_rows = new_n_rows;
 
-    return mreshaped;
+    return create_matrix(matrix.data, new_n_rows, new_n_cols);
 }
 
 Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce){
     Matrix m;
-    int *data;
-    int new_n_cols = re-rs;
-    int new_n_rows = ce-cs;
+    int *data, new_n_cols = re-rs, new_n_rows = ce-cs;
 
     data = malloc((new_n_cols)*(new_n_rows)*sizeof(int)); 
 
@@ -168,7 +163,7 @@ Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce){
 int min(Matrix matrix){
     int min = matrix.data[matrix.offset];
 
-    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++)
+    for (int i = matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++)
         if (matrix.data[i] < min)
             min = matrix.data[i];
 
@@ -178,7 +173,7 @@ int min(Matrix matrix){
 int max(Matrix matrix){
     int max = matrix.data[matrix.offset];
 
-    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++)
+    for (int i = matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++)
         if (matrix.data[i] > max)
             max = matrix.data[i];
 
@@ -186,9 +181,7 @@ int max(Matrix matrix){
 }
 
 int argmin(Matrix matrix){
-
-    int index_min = matrix.offset;
-    int min = matrix.data[index_min];
+    int index_min = matrix.offset, min = matrix.data[index_min];
 
     for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] < min){
@@ -201,11 +194,9 @@ int argmin(Matrix matrix){
 }
 
 int argmax(Matrix matrix){
+    int index_max = matrix.offset, max = matrix.data[index_max];
 
-    int index_max = matrix.offset;
-    int max = matrix.data[index_max];
-
-    for (int i=matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
+    for (int i = matrix.offset+1; i < matrix.n_cols*matrix.n_rows; i++){
         if (matrix.data[i] > max){
             max = matrix.data[i];
             index_max = i;
@@ -219,27 +210,26 @@ int argmax(Matrix matrix){
 //>================== operacoes aritmeticas: ===================
 
 Matrix add(Matrix matrix_1, Matrix matrix_2){
-
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
-        puts("soma invalida");
-        return zeros_matrix(1, 1);
+        puts("in add: ");
+        printf("Error: operands of incompatible shape\n");
+        exit(1);
     }
 
     int *data;
     data = malloc(matrix_1.n_cols*matrix_1.n_rows*sizeof(int));
 
-    for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
+    for (int i = matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
         *(data+i) = matrix_1.data[i] + matrix_2.data[i];
 
-    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
-    return m3;
+    return create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);;
 }
 
 Matrix sub(Matrix matrix_1, Matrix matrix_2){
-
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
-        puts("subtracao invalida");
-        return zeros_matrix(1, 1);
+        puts("in sub: ");
+        printf("Error: operands of incompatible shape\n");
+        exit(1);
     }
 
     int *data;
@@ -248,24 +238,23 @@ Matrix sub(Matrix matrix_1, Matrix matrix_2){
     for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
         *(data+i) = matrix_1.data[i] - matrix_2.data[i];
 
-    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
-    return m3;
+    return create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
 }
 
 Matrix division(Matrix matrix_1, Matrix matrix_2){
-    int size;
-
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
-        puts("divisao invalida: tamanhos incompativeis");
-        return zeros_matrix(1, 1);
+        puts("in division: ");
+        printf("Error: operands of incompatible shape\n");
+        exit(1);
     }
 
-    size = matrix_1.n_cols*matrix_1.n_rows;
+    int size = matrix_1.n_cols*matrix_1.n_rows;
 
     for (int i = 0; i<size; i++){
         if (matrix_2.data[i] == 0){
-            puts("divisao invalida: denominador nulo");
-            return zeros_matrix(1, 1);
+            puts("in division: ");
+            printf("Error: cannot divide by 0\n");
+            exit(1);
         }
     }
 
@@ -275,14 +264,14 @@ Matrix division(Matrix matrix_1, Matrix matrix_2){
     for (int i = matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
         *(data+i) = matrix_1.data[i] / matrix_2.data[i];
 
-    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
-    return m3;
+    return create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
 }
 
 Matrix mul(Matrix matrix_1, Matrix matrix_2){
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
-        puts("multiplicacao invalida");
-        return zeros_matrix(1, 1);
+        puts("in mul: ");
+        printf("Error: operands of incompatible shape\n");
+        exit(1);
     }
 
     int *data;
@@ -291,6 +280,5 @@ Matrix mul(Matrix matrix_1, Matrix matrix_2){
     for (int i=matrix_1.offset; i < matrix_1.n_cols*matrix_1.n_rows; i++)
         *(data+i) = matrix_1.data[i] * matrix_2.data[i];
 
-    Matrix m3 = create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
-    return m3;
+    return create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
 }
