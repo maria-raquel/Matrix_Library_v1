@@ -1,12 +1,13 @@
 /*
->>>>>>>>>>> PROVA_2_PROGRAMACAO_ESTRUTURADA <<<<<<<<<<<<<
+>>>>>>>>>>> PROJETO FINAL DE PROGRAMACAO ESTRUTURADA <<<<<<<<<<<<<
 
-* Professor: Igor Malheiros
+Professor: 
+Igor Malheiros
 
->>>>>>>>>>>>>>>>>>>>>>>>>>|<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Alunos:
-- Joao Antonio Honorato | 20210026680
-- Maria Raquel Martinez | 20200025900
+Joao Antonio Honorato | 20210026680
+Maria Raquel Martinez | 20200025900
+
 */
 
 #ifndef MATRIX_H
