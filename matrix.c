@@ -98,9 +98,7 @@ void print_matrix(Matrix matrix){
 
 //>================= manipulacao de dimensoes: =================
 
-
 Matrix transpose(Matrix matrix){
-    Matrix m;
     int *data = malloc((matrix.n_cols)*(matrix.n_rows)*sizeof(int)); 
 
     int cols_counter = 1;
@@ -108,7 +106,7 @@ Matrix transpose(Matrix matrix){
 
     for (int i = 0, j = 0; i < matrix.n_cols*matrix.n_rows; i++){
         printf("i=%d j=%d\n", i, j);
-        data[j] = matrix.data[i];
+        data[i] = matrix.data[j];
         j += matrix.stride_rows;
         cols_counter++;
         if (cols_counter > matrix.n_rows){
@@ -118,7 +116,7 @@ Matrix transpose(Matrix matrix){
         }
     }
 
-    m = create_matrix(data, matrix.n_cols, matrix.n_rows);
+    Matrix m = create_matrix(data, matrix.n_cols, matrix.n_rows);
     return m;
 }
 

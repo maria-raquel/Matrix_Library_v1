@@ -10,17 +10,14 @@ Alunos:
 */
 
 
-
-
-
 #include "matrix.h"
 #include <stdio.h>
 
 int main(){
-    int array[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+    int array[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     Matrix m1;
 
-    m1 = create_matrix(array, 3, 4);
+    m1 = create_matrix(array, 3, 3);
 
     print_matrix(m1);
     putchar('\n');
