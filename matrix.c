@@ -101,9 +101,24 @@ void print_matrix(Matrix matrix){
 
 Matrix transpose(Matrix matrix){
     Matrix m;
-    m = create_matrix(matrix.data, matrix.n_cols, matrix.n_rows);
-    m.stride_cols = matrix.stride_rows;
-    m.stride_rows = matrix.stride_cols;
+    int *data = malloc((matrix.n_cols)*(matrix.n_rows)*sizeof(int)); 
+
+    int cols_counter = 1;
+    int cols_resetter = 0;
+
+    for (int i = 0, j = 0; i < matrix.n_cols*matrix.n_rows; i++){
+        printf("i=%d j=%d\n", i, j);
+        data[j] = matrix.data[i];
+        j += matrix.stride_rows;
+        cols_counter++;
+        if (cols_counter > matrix.n_rows){
+            cols_counter = 1;
+            cols_resetter++;
+            j = cols_resetter;
+        }
+    }
+
+    m = create_matrix(data, matrix.n_cols, matrix.n_rows);
     return m;
 }
 
