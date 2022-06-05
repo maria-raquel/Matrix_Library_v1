@@ -102,8 +102,8 @@ void print_matrix(Matrix matrix){
 Matrix transpose(Matrix matrix){
     Matrix m;
     m = create_matrix(matrix.data, matrix.n_cols, matrix.n_rows);
-    m.stride_cols = m.n_cols;
-    m.stride_rows = 1;
+    m.stride_cols = matrix.stride_rows;
+    m.stride_rows = matrix.stride_cols;
     return m;
 }
 
@@ -121,50 +121,23 @@ Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
     return mreshaped;
 }
 
-// rs é o índice da linha inicial do recorte
-// re é o índice da linha final do recorte
-// cs é o índice da coluna inicial do recorte
-// ce é o índice da coluna final do recorte
-
 Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce){
     Matrix m;
     int *data;
-    data = malloc((re-rs)*(ce-cs)*sizeof(int)); 
+    int new_n_cols = re-rs;
+    int new_n_rows = ce-cs;
+
+    data = malloc((new_n_cols)*(new_n_rows)*sizeof(int)); 
+
+    int i = 0;
+    for (int x = 0; x < new_n_cols; x++)
+        for (int y = 0; y < new_n_rows; y++)
+            data[i++] = a_matrix.data[((rs+(x))*a_matrix.stride_rows) + ((cs+(y)) * a_matrix.stride_cols)];
     
-    int row=0;
-    int col=0;
-
-    int new_offset = a_matrix.offset;
-    for (; row<rs; new_offset += a_matrix.stride_rows, row++){}
-    for (; col<cs; new_offset += a_matrix.stride_cols, col++){}
-
-    m.offset = new_offset;
-
-    for (int i=new_offset, j = 0; j < (re-rs)*(ce-cs); j++){
-        *(data + j) = a_matrix.data[i++];
-        if (j == (ce-cs)){
-            i += a_matrix.stride_cols - 1;
-        }
-    }
-
-    m = create_matrix(data, (re-rs), (ce-cs));
-
-    printf("offs=%d r=%d c=%d\n", new_offset, row, col);
-
-    m.stride_rows = a_matrix.stride_rows;
-    m.stride_cols = a_matrix.stride_cols;
+    m = create_matrix(data, new_n_cols, new_n_rows);
 
     return m;
 }
-
-/*     
-       a b c 
-       c d e 
-       f g h
-
-       a b c  a b c  a b c
-*/
-
 
 //>======================== agregacao: =========================
 
