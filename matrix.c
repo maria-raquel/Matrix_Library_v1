@@ -69,6 +69,12 @@ Matrix tile_matrix(Matrix matrix, int reps){
 //>==================== acessar elementos: =====================
 
 int get_element(Matrix matrix, int ri, int ci){
+
+    if (ri >= matrix.n_rows || ci >= matrix.n_cols){
+        puts("ERROR: index out of range");
+        exit(1);
+    }
+
     int i=matrix.offset;
 
     for (int row=0; row<ri; i += matrix.stride_rows, row++){}
@@ -78,6 +84,12 @@ int get_element(Matrix matrix, int ri, int ci){
 }
 
 void put_element(Matrix matrix, int ri, int ci, int elem){
+
+    if (ri >= matrix.n_rows || ci >= matrix.n_cols){
+        puts("ERROR: index out of range");
+        exit(1);
+    }
+
     int i=matrix.offset;
 
     for (int row=0; row<ri; i += matrix.stride_rows, row++){}
@@ -105,7 +117,6 @@ Matrix transpose(Matrix matrix){
     int cols_resetter = 0;
 
     for (int i = 0, j = 0; i < matrix.n_cols*matrix.n_rows; i++){
-        printf("i=%d j=%d\n", i, j);
         data[i] = matrix.data[j];
         j += matrix.stride_rows;
         cols_counter++;
