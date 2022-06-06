@@ -18,15 +18,32 @@ Maria Raquel Martinez | 20200025900
 
 //>==================== criacao de matrizes: ===================
 
+/*
+    Cria uma matriz a partir de um array, o numero de colunas e o numero de linhas.
+    > data: array unidimensional 
+    > n_rows: numero de linhas
+    > n_cols: numero de colunas
+*/
 Matrix create_matrix(int *data, int n_rows, int n_cols){
     Matrix m = {data, n_rows, n_cols, n_cols, 1, 0};
     return m;
 }
 
+/*
+    Cria uma matriz com todos elementos nulos.
+    > n_rows: numero de linhas
+    > n_cols: numero de colunas
+*/
 Matrix zeros_matrix(int n_rows, int n_cols){
     return full_matrix(n_rows, n_cols, 0);
 }
 
+/*
+    Cria uma matriz com todos elementos iguais ao valor passado.
+    > n_rows: numero de linhas
+    > n_cols: numero de colunas
+    > value: valor dos elementos da matriz
+*/
 Matrix full_matrix(int n_rows, int n_cols, int value){
     int *data;
     data = malloc(n_rows*n_cols*sizeof(int));
@@ -38,6 +55,10 @@ Matrix full_matrix(int n_rows, int n_cols, int value){
     return m;
 }
 
+/*
+    Cria uma matriz identidade.
+    > n: valor das dimensoes (nxn) da matriz
+*/
 Matrix i_matrix(int n){
     int *data;
     data = malloc(n*n*sizeof(int));
@@ -51,6 +72,16 @@ Matrix i_matrix(int n){
     return create_matrix(data, n, n);
 }
 
+/*
+    Cria uma matriz nova, repetindo a matriz passada horizontalmente (reps) vezes.
+    Exemplo:
+    a matriz a seguir repetida 3 vezes será
+    (1 2)...(1 2 1 2 1 2)
+    (3 4)-->(3 4 3 4 3 4)
+    (5 6)...(5 6 5 6 5 6)
+    > matrix: matrix a ser repetida
+    > reps: quantidade de repetições
+*/
 Matrix tile_matrix(Matrix matrix, int reps){
     int *data, k = 0;
     data = malloc(matrix.n_cols*matrix.n_rows*sizeof(int)*reps);
@@ -68,6 +99,12 @@ Matrix tile_matrix(Matrix matrix, int reps){
 
 //>==================== acesso a elementos: ====================
 
+/*
+    Retorna o elemento da matriz pela sua posicao.
+    > matriz: matriz a ser acessada
+    > ri: indice da linha do elemento
+    > ci: indice da coluna do elemento
+*/
 int get_element(Matrix matrix, int ri, int ci){
 
     if (ri >= matrix.n_rows || ci >= matrix.n_cols){
@@ -84,6 +121,13 @@ int get_element(Matrix matrix, int ri, int ci){
     return matrix.data[i];
 }
 
+/*
+    Modifica um elemento da matriz pela sua posicao.
+    > matriz: matriz a ser acessada
+    > ri: indice da linha do elemento
+    > ci: indice da coluna do elemento
+    > elem: valor novo do elemento
+*/
 void put_element(Matrix matrix, int ri, int ci, int elem){
 
     if (ri >= matrix.n_rows || ci >= matrix.n_cols){
@@ -100,6 +144,9 @@ void put_element(Matrix matrix, int ri, int ci, int elem){
     matrix.data[i] = elem;
 }
 
+/*
+    Exibe os dados da matriz em seu formato.
+*/
 void print_matrix(Matrix matrix){
     int i = matrix.offset;
     for (int row = 0; row < matrix.n_rows; row++){
@@ -112,6 +159,9 @@ void print_matrix(Matrix matrix){
 
 //>================= manipulacao de dimensoes: =================
 
+/*
+    Retorna a matrix transposta da matriz.
+*/
 Matrix transpose(Matrix matrix){
     int *data = malloc((matrix.n_cols)*(matrix.n_rows)*sizeof(int)); 
 
@@ -128,10 +178,15 @@ Matrix transpose(Matrix matrix){
         }
     }
 
-    Matrix m = create_matrix(data, matrix.n_cols, matrix.n_rows);
-    return m;
+    return create_matrix(data, matrix.n_cols, matrix.n_rows);
 }
 
+/*
+    Altera as dimencoes da matriz.
+    > matrix: matriz a ter suas dimensoes alteradas
+    > new_n_rows: novo numero de linhas
+    > new_n_cols: novo numero de colunas
+*/
 Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
    if (matrix.n_cols*matrix.n_rows != new_n_rows*new_n_cols){
         puts("in reshape: ");
@@ -142,6 +197,13 @@ Matrix reshape(Matrix matrix, int new_n_rows, int new_n_cols){
     return create_matrix(matrix.data, new_n_rows, new_n_cols);
 }
 
+/*
+    Retorna um recorte da matriz.
+    > rs: indice da linha inicial do recorte
+    > re: indice da linha final do recorte
+    > cs: indice da coluna inicial do recorte
+    > ce: indice da coluna final do recorte
+*/
 Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce){
     Matrix m;
     int *data, new_n_cols = re-rs, new_n_rows = ce-cs;
@@ -153,13 +215,14 @@ Matrix slice(Matrix a_matrix, int rs, int re, int cs, int ce){
         for (int y = 0; y < new_n_rows; y++)
             data[i++] = a_matrix.data[((rs+(x))*a_matrix.stride_rows) + ((cs+(y)) * a_matrix.stride_cols)];
     
-    m = create_matrix(data, new_n_cols, new_n_rows);
-
-    return m;
+    return create_matrix(data, new_n_cols, new_n_rows);
 }
 
 //>======================== agregacao: =========================
 
+/*
+    Retorna o menor elemento da matriz.
+*/
 int min(Matrix matrix){
     int min = matrix.data[matrix.offset];
 
@@ -170,6 +233,9 @@ int min(Matrix matrix){
     return min;
 }
 
+/*
+    Retorna o maior elemento da matriz.
+*/
 int max(Matrix matrix){
     int max = matrix.data[matrix.offset];
 
@@ -180,6 +246,9 @@ int max(Matrix matrix){
     return max;
 }
 
+/*
+    Retorna o indice do menor elemento da matriz.
+*/
 int argmin(Matrix matrix){
     int index_min = matrix.offset, min = matrix.data[index_min];
 
@@ -193,6 +262,9 @@ int argmin(Matrix matrix){
     return index_min;
 }
 
+/*
+    Retorna o indice do maior elemento da matriz.
+*/
 int argmax(Matrix matrix){
     int index_max = matrix.offset, max = matrix.data[index_max];
 
@@ -206,9 +278,11 @@ int argmax(Matrix matrix){
     return index_max;
 }
 
-
 //>================== operacoes aritmeticas: ===================
 
+/*
+    Adiciona duas matrizes elemento a elemento.
+*/
 Matrix add(Matrix matrix_1, Matrix matrix_2){
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
         puts("in add: ");
@@ -225,6 +299,11 @@ Matrix add(Matrix matrix_1, Matrix matrix_2){
     return create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);;
 }
 
+/*
+    Subtrai duas matrizes elemento a elemento.
+    > matrix_1: matriz minuendo
+    > matrix_2: matriz subtraendo
+*/
 Matrix sub(Matrix matrix_1, Matrix matrix_2){
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
         puts("in sub: ");
@@ -241,6 +320,11 @@ Matrix sub(Matrix matrix_1, Matrix matrix_2){
     return create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
 }
 
+/*
+    Divide duas matrizes elemento a elemento.
+    > matrix_1: matriz dividendo
+    > matrix_2: matriz divisor
+*/
 Matrix division(Matrix matrix_1, Matrix matrix_2){
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
         puts("in division: ");
@@ -267,6 +351,9 @@ Matrix division(Matrix matrix_1, Matrix matrix_2){
     return create_matrix(data, matrix_1.n_rows, matrix_1.n_cols);
 }
 
+/*
+    Multiplica duas matrizes elemento a elemento.
+*/
 Matrix mul(Matrix matrix_1, Matrix matrix_2){
     if (matrix_1.n_cols != matrix_2.n_cols || matrix_1.n_rows != matrix_2.n_rows){
         puts("in mul: ");
