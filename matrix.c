@@ -79,7 +79,7 @@ Matrix i_matrix(int n){
     (1 2)...(1 2 1 2 1 2)
     (3 4)-->(3 4 3 4 3 4)
     (5 6)...(5 6 5 6 5 6)
-    > matrix: matrix a ser repetida
+    > matrix: matriz a ser repetida
     > reps: quantidade de repetições
 */
 Matrix tile_matrix(Matrix matrix, int reps){
@@ -248,6 +248,7 @@ int max(Matrix matrix){
 
 /*
     Retorna o indice do menor elemento da matriz.
+    (O indice do elemento no array unidimencional que armazena os dados da matriz).
 */
 int argmin(Matrix matrix){
     int index_min = matrix.offset, min = matrix.data[index_min];
@@ -264,6 +265,7 @@ int argmin(Matrix matrix){
 
 /*
     Retorna o indice do maior elemento da matriz.
+    (O indice do elemento no array unidimencional que armazena os dados da matriz).
 */
 int argmax(Matrix matrix){
     int index_max = matrix.offset, max = matrix.data[index_max];
@@ -322,6 +324,7 @@ Matrix sub(Matrix matrix_1, Matrix matrix_2){
 
 /*
     Divide duas matrizes elemento a elemento.
+    Como a matriz é feita de um array de inteiros, a divisão sempre será intera.
     > matrix_1: matriz dividendo
     > matrix_2: matriz divisor
 */
